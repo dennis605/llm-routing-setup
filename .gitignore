@@ -1,0 +1,10 @@
+.DS_Store
+*.env
+.env*
+*.sqlite*
+*.log
+*.key
+*.pem
+settings.json
+service.json
+

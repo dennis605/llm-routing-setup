@@ -13,8 +13,35 @@ title: Konfiguration
 | CCR interner Core | `127.0.0.1:3457` | interne CCR-Komponente; kein normaler Benutzer-Endpunkt |
 | CCR Web UI | `127.0.0.1:3458` | nur lokal öffnen; URL kann ein Web-Token enthalten |
 | OmniRoute Host-Port | `0.0.0.0:20129` | Docker veröffentlicht Host-Port 20129 auf Container-Port 20128 |
+| Hermes Dashboard | `0.0.0.0:9119` | moderne Hermes-Verwaltungsoberfläche auf dem Mac mini |
+| Hermes Web UI | `0.0.0.0:8787` | zusätzliche/ältere Hermes-Weboberfläche |
+| Lokales Ollama | `192.168.178.129:11434` | in Hermes konfigurierter lokaler Modellpfad |
+| Lokaler MLX-/Qwen-Endpunkt | `192.168.178.129:8081` | in Hermes konfigurierter Qwen-Modellpfad |
 
 > OmniRoute ist derzeit auf allen Host-Interfaces gebunden. Wenn kein LAN-Zugriff benötigt wird, sollte das Docker-Port-Mapping auf `127.0.0.1:20129:20128` eingeschränkt werden.
+
+Dasselbe Prüfprinzip gilt für die Hermes-Oberflächen auf `9119` und `8787`: Eine Bindung an `0.0.0.0` ist nur sinnvoll, wenn der Zugriff aus dem LAN beabsichtigt und durch Authentifizierung sowie Netzgrenzen geschützt ist.
+
+## Codex auf dem Mac mini
+
+Die wesentlichen, secret-freien Einstellungen lauten:
+
+```toml
+model_provider = "claude-code-router"
+model = "gpt-5.6-luna"
+model_reasoning_effort = "medium"
+
+[model_providers.claude-code-router]
+name = "Claude Code Router"
+base_url = "http://127.0.0.1:3456/v1"
+wire_api = "responses"
+```
+
+Der echte Bearer Token bleibt ausschließlich in der lokalen Codex-Konfiguration und wird nicht dokumentiert.
+
+## Hermes Agent
+
+Hermes verwendet eine eigene Konfiguration unter `~/.hermes`. Auf dem Mac mini sind MiniMax M3 als Hauptdefault, mehrere Fachprofile sowie direkte lokale Provider für Ollama und MLX/Qwen konfiguriert. Zugangsdaten liegen in `.env`-Dateien und werden nicht in diese Doku übernommen.
 
 ## Relevante Claude-Code-Variablen
 
@@ -60,4 +87,3 @@ services:
 ```
 
 `ENABLE_CC_COMPATIBLE_PROVIDER=true` schaltet in OmniRoute einen speziellen Provider-Typ für externe Claude-Code-kompatible Relays frei. Der Schalter war **nicht** der entscheidende Mechanismus für die funktionierende Kette. Entscheidend waren CCR als vorgeschaltetes Gateway, das Claude-Code-Profil, die Discovery-Variable und CCRs eigener exponierter Modellkatalog.
-

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  <title>{{ page.title | default: site.title }} · {{ site.title }}</title>
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="{{ '/' | relative_url }}">LLM Routing Setup</a>
+      <nav aria-label="Hauptnavigation">
+        <a href="{{ '/architecture.html' | relative_url }}">Architektur</a>
+        <a href="{{ '/configuration.html' | relative_url }}">Konfiguration</a>
+        <a href="{{ '/routing.html' | relative_url }}">Routing</a>
+        <a href="{{ '/claude-mem.html' | relative_url }}">claude-mem</a>
+        <a href="{{ '/troubleshooting.html' | relative_url }}">Troubleshooting</a>
+        <a href="{{ '/security.html' | relative_url }}">Sicherheit</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap content">{{ content }}</main>
+  <footer class="wrap footer">Technische Betriebsdokumentation · Stand 27. August 2026</footer>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    document.querySelectorAll("pre > code.language-mermaid").forEach((code) => {
+      const diagram = document.createElement("div");
+      diagram.className = "mermaid";
+      diagram.textContent = code.textContent;
+      code.parentElement.replaceWith(diagram);
+    });
+    mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "strict" });
+  </script>
+</body>
+</html>
+

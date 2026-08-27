@@ -5,6 +5,12 @@ title: Troubleshooting
 
 # Troubleshooting
 
+## Zuerst den ausführenden Host bestimmen
+
+MacBook und Mac mini besitzen getrennte Konfigurationen. Ein lokaler Codex- oder Hermes-Default auf dem MacBook erklärt nicht das Verhalten eines Remote-Tasks auf dem Mac mini. Vor jeder Prüfung Hostname, Projektpfad und verwendete App-/CLI-Instanz feststellen.
+
+`127.0.0.1:3456` auf dem MacBook ist **nicht** CCR auf dem Mac mini. Loopback-Adressen gelten nur innerhalb des jeweiligen Geräts. Remote-Zugriffe verwenden den Codex-Remote-Kanal, SSH oder eine bewusst freigegebene LAN-Adresse.
+
 ## Schnellprüfung
 
 1. Lauscht OmniRoute auf `20129`?
@@ -23,6 +29,22 @@ Ein starker Hinweis auf einen alten Direktpfad ist ein Gateway-Cache, dessen `ba
 ## CCR meldet „No available models“
 
 CCR hat noch keinen Provider mit mindestens einem exponierten Modell. In der Web UI OmniRoute als Custom Provider hinzufügen, Verbindung prüfen und wenigstens ein Modell auswählen. Erst danach das Gateway starten beziehungsweise das Agent-Profil öffnen.
+
+## Codex auf dem Mac mini umgeht CCR
+
+In `~/.codex/config.toml` muss `model_provider = "claude-code-router"` gesetzt sein. Der Provider verwendet `http://127.0.0.1:3456/v1` und `wire_api = "responses"`. Der Codex-Default auf dem MacBook ist davon unabhängig.
+
+## Hermes verwendet ein unerwartetes Modell
+
+Hermes hat globale und profilspezifische Konfigurationen. Zuerst den aktiven Profilnamen im Profil-/Session-Switcher prüfen. Danach die `model`-Sektion dieses Profils kontrollieren. CCRs `/model`-Auswahl ändert Hermes-Profile nicht.
+
+## Hermes Dashboard ist vom MacBook nicht erreichbar
+
+- Auf dem Mac mini prüfen, ob Port `9119` lauscht.
+- Für die zusätzliche Web UI gilt Port `8787`.
+- Vom MacBook die LAN-Adresse des Mac mini verwenden, nicht `127.0.0.1`.
+- Firewall, Basic Auth und Netzsegment prüfen.
+- Ports nicht ungeschützt ins Internet weiterleiten.
 
 ## CCR sieht OmniRoute nicht
 
@@ -50,4 +72,3 @@ Die UI läuft auf `127.0.0.1:3458`, nicht auf dem Gateway-Port. Der vollständig
 ## claude-mem meldet sich doppelt
 
 Nach manuellen `worker-service.cjs`-Hooks suchen. Wenn das Plugin aktiv ist, alte manuelle Duplikate nach einem Backup entfernen. Details: [claude-mem Hooks](claude-mem.html).
-

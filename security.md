@@ -48,10 +48,21 @@ Treffer sind nicht automatisch Secrets: Diese Sicherheitsseite enthält die Such
 
 CCR ist korrekt an `127.0.0.1` gebunden. OmniRoutes aktuelles Docker-Mapping veröffentlicht `20129` dagegen über `0.0.0.0`. Falls Zugriff aus dem LAN nicht beabsichtigt ist, sollte auf Loopback eingeschränkt und anschließend die Erreichbarkeit erneut geprüft werden.
 
+Die Hermes-Oberflächen lauschen derzeit auf `0.0.0.0:9119` und `0.0.0.0:8787`. Sie dürfen nur in einem vertrauenswürdigen LAN beziehungsweise hinter einem abgesicherten Tunnel oder Reverse Proxy erreichbar sein. Basic Auth ersetzt keine saubere Netzsegmentierung.
+
+Die private Mac-mini-Adresse `192.168.178.129` ist eine interne RFC-1918-Adresse und nicht aus dem öffentlichen Internet routbar. Trotzdem werden weder Benutzername, SSH-Key-Pfad noch Zugangsdaten veröffentlicht.
+
+## Geräteübergreifende Regeln
+
+- Secrets nicht zwischen MacBook und Mac mini per Chat, Screenshot oder unverschlüsselter Datei kopieren.
+- Für Wartung SSH mit Schlüssel verwenden; private Schlüssel verbleiben auf dem steuernden Gerät.
+- Vor Änderungen immer prüfen, auf welchem Host die Datei liegt.
+- Remote-Control-, SSH- und Web-UI-Zugang als getrennte Vertrauenskanäle behandeln.
+- Konfigurationsbackups von `~/.codex`, `~/.claude` und `~/.hermes` nie vollständig in ein öffentliches Repository übernehmen.
+
 ## Falls doch ein Secret veröffentlicht wurde
 
 1. Secret sofort beim ausstellenden Dienst widerrufen oder rotieren.
 2. Erst danach Git-Historie bereinigen; das Löschen aus dem letzten Commit allein reicht nicht.
 3. GitHub-Caches, Actions-Logs und veröffentlichte Pages-Artefakte berücksichtigen.
 4. Betroffene Provider-Verbindungen testen und den Vorfall kurz dokumentieren, ohne das Secret zu wiederholen.
-

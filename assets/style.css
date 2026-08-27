@@ -1,0 +1,27 @@
+:root { color-scheme: light dark; --bg:#0b1020; --panel:#141b2d; --text:#e7ecf5; --muted:#aeb8ca; --line:#2b3854; --accent:#77bdfb; --good:#68d391; --warn:#f6c85f; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--text); font:16px/1.65 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+.wrap { width:min(1080px,calc(100% - 2rem)); margin-inline:auto; }
+.site-header { position:sticky; top:0; z-index:5; border-bottom:1px solid var(--line); background:color-mix(in srgb,var(--bg) 92%,transparent); backdrop-filter:blur(12px); }
+.site-header .wrap { display:flex; gap:1.5rem; align-items:center; justify-content:space-between; min-height:68px; }
+.brand { color:var(--text); font-weight:800; text-decoration:none; white-space:nowrap; }
+nav { display:flex; flex-wrap:wrap; gap:.25rem 1rem; }
+nav a, a { color:var(--accent); }
+nav a { font-size:.92rem; text-decoration:none; }
+.content { padding:3rem 0 4rem; }
+.content > :first-child { margin-top:0; }
+h1 { font-size:clamp(2rem,5vw,3.5rem); line-height:1.08; letter-spacing:-.035em; }
+h2 { margin-top:2.8rem; padding-top:.35rem; border-top:1px solid var(--line); }
+h3 { margin-top:2rem; }
+p, li { max-width:78ch; }
+code { padding:.12em .35em; border-radius:5px; background:var(--panel); }
+pre { overflow:auto; padding:1rem; border:1px solid var(--line); border-radius:10px; background:var(--panel); }
+pre code { padding:0; background:transparent; }
+table { width:100%; border-collapse:collapse; margin:1.2rem 0; }
+th, td { padding:.7rem .8rem; border:1px solid var(--line); text-align:left; vertical-align:top; }
+th { background:var(--panel); }
+blockquote { margin:1.5rem 0; padding:.15rem 1rem; border-left:4px solid var(--accent); color:var(--muted); background:var(--panel); }
+.mermaid { overflow:auto; padding:1rem; border-radius:12px; background:#fff; }
+.footer { padding:1.5rem 0 3rem; border-top:1px solid var(--line); color:var(--muted); }
+@media (max-width:760px) { .site-header { position:static; } .site-header .wrap { align-items:flex-start; flex-direction:column; padding-block:1rem; } nav { gap:.4rem 1rem; } }
+

@@ -1,0 +1,7 @@
+title: LLM Routing Setup
+description: Claude Code über CCR und OmniRoute zu mehreren Providern routen
+lang: de-DE
+markdown: kramdown
+exclude:
+  - README.md
+
